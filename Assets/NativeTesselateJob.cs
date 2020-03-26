@@ -846,10 +846,19 @@ public class NativeTesselateJob
         return (q.x - p.x) * (r.y - q.y) - (r.x - q.x) * (q.y - p.y); //https://algs4.cs.princeton.edu/91primitives/;
     }
 
-    //// check if two points are equal
+    // check if two points are equal
     static bool Equals(Node p1, Node p2)
     {
         return p1.x == p2.x && p1.y == p2.y;
+    }
+
+    // check if two NativeLists are equal
+    static bool Equals(NativeList<Node> p1, NativeList<Node> p2)
+    {
+        bool sameLength = p1.Length == p2.Length;
+        bool samefirstNode = p1[0].x == p2[0].x && p1[0].y == p2[0].y;
+        bool samelastNode = p1[p1.Length-1].x == p2[p2.Length-1].x && p1[p1.Length - 1].y == p2[p2.Length - 1].y;
+        return sameLength &&  samefirstNode && samelastNode;
     }
 
     // check if two segments intersect
@@ -987,7 +996,7 @@ public class NativeTesselateJob
         int bPrevID = bLL.PrevLists[bID];
         int a2ID, b2ID;
 
-        if (aLL.NodeLists.Equals(bLL.NodeLists)) ////split Polygon
+        if (Equals(aLL.NodeLists,bLL.NodeLists)) ////split Polygon
         {
             //first Polygon
             aLL.NextLists[aID] = bID;
